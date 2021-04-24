@@ -330,53 +330,6 @@ end
 
 # ===== Helpers
 
-# Our example apps sell emoji apparel; this hash lets us calculate the total amount to charge.
-EMOJI_STORE = {
-  "👕" => 2000,
-  "👖" => 4000,
-  "👗" => 3000,
-  "👞" => 700,
-  "👟" => 600,
-  "👠" => 1000,
-  "👡" => 2000,
-  "👢" => 2500,
-  "👒" => 800,
-  "👙" => 3000,
-  "💄" => 2000,
-  "🎩" => 5000,
-  "👛" => 5500,
-  "👜" => 6000,
-  "🕶" => 2000,
-  "👚" => 2500,
-}
-
-def price_lookup(product)
-  price = EMOJI_STORE[product]
-  raise "Can't find price for %s (%s)" % [product, product.ord.to_s(16)] if price.nil?
-  return price
-end
-
-def calculate_price(products, shipping)
-  amount = 1099  # Default amount.
-
-  if products
-    amount = products.reduce(0) { | sum, product | sum + price_lookup(product) }
-  end
-
-  if shipping
-    case shipping
-    when "fedex"
-      amount = amount + 599
-    when "fedex_world"
-      amount = amount + 2099
-    when "ups_worldwide"
-      amount = amount + 1099
-    end
-  end
-
-  return amount
-end
-
 def currency_for_country(country)
   # Determine currency to use. Generally a store would charge different prices for
   # different countries, but for the sake of simplicity we'll charge X of the local currency.
